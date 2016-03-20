@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+				overflow: hidden;
+			}
+			
+			p {
+				font-family: "Meiryo";
+				font-weight: bold;
+				font-size: 32px;
+				text-indent: 16px;
+				color: white;
+				width: 490px;
+				height: 300px;
+				background-image: url(cat.jpg);
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<p id="message"></p>
+	</body>
+	<script>
+		(function() {
+			document.body.addEventListener('click', () => {
+				var win = require('remote').getCurrentWindow();
+				win.hide();
+			});
+			
+			$message = document.getElementById('message');
+			
+			require('electron').ipcRenderer.on('message', (event, message) => {
+				$message.textContent = decodeURI(message);
+			});
+		})();
+	</script>
+</html>
